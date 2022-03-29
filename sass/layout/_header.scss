@@ -1,0 +1,61 @@
+.header {
+  height: 95vh;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba($color-primary-dark, 0.815),
+      rgba($color-primary-light, 0.815)
+    ),
+    url("/img/hero-small.jpg");
+  /* whatever width of viewport, it will always try to fit element inside of box */
+  background-size: cover;
+  /* always place the image postion on "top" of the container */
+  background-position: top;
+
+  -webkit-clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 75vh,
+    0 100%
+  ); // because it doesn't work in all browser
+  /* clipping for makeing customize viewport window website: clippy */
+  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+
+  /* for working with position: absolute in child parents should be position: relative */
+  position: relative;
+
+  @media (min-resolution: 192dpi) and (min-width: 37.5em), (min-width: 125em) {
+    background-image: linear-gradient(
+        to right bottom,
+        rgba($color-secondary-light, 0.8),
+        rgba($color-secondary-dark, 0.8)
+      ),
+      url("/img/hero.jpg");
+  }
+
+  @include respond(phone) {
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+  }
+
+  &__logo-box {
+    position: absolute;
+    top: 4rem;
+    left: 4rem;
+  }
+
+  &__logo {
+    height: 3.5rem;
+  }
+  &__text-box {
+    /* centering this box */
+    position: absolute;
+    /* these two top and left properties are in reletion with parent element */
+    top: 40%;
+    left: 50%;
+    /* this will minus extra 50% from both left and top container from above property (top: 40%, left: 50%) */
+    /* this transform properties is releted to property itself */
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 1.6rem;
+  }
+}

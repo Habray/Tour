@@ -1,0 +1,85 @@
+.story {
+  width: 75%;
+  margin: 0 auto;
+  box-shadow: 0 3rem 6rem rgba($color-black, $alpha: 0.1);
+  border-radius: 3px;
+  padding: 6rem;
+  padding-left: 9rem; // we lost 3rem padding because of "tranform" circle below
+  font-size: $default-font-size;
+  background-color: rgba($color-white, $alpha: 0.6);
+
+  transform: skewX(-12deg);
+
+  @include respond(tab-port) {
+    width: 100%;
+    padding: 4rem;
+    padding-left: 7rem; // we lost 3rem padding because of "tranform" circle below
+  }
+
+  @include respond(phone) {
+    transform: skewX(0);
+  }
+
+  &__shape {
+    width: 15rem;
+    height: 15rem;
+    float: left;
+
+    // for makeing circular shape image border for text to be wrap around it
+    // circle("radius-half of the height & width we define above i.e 7.5rem" "centre i.e horizontally and vertically 50%"
+    // for this property to work it need to be "float" and "dimensions (width and height)
+    -webkit-shape-outside: circle(50% at 50% 50%);
+    shape-outside: circle(50% at 50% 50%);
+
+    -webkit-clip-path: circle(50% at 50% 50%);
+    clip-path: circle(50% at 50% 50%);
+
+    // best way to move around "float" element is with "transform". Don't mess with margin and padding
+    transform: translateX(-3rem) skewX(12deg);
+    position: relative;
+
+    @include respond(phone) {
+      transform: translateX(-3rem) skewX(0);
+    }
+  }
+
+  &__img {
+    // we need to define width because it inside the "float" property hence will take its original size.
+    // if the width is bigger then height,it will not fill in all space. So use "height" instead of "width"
+    height: 100%; // because it's inside of the "__shape" with dimesions 15rem so that image will be fill 100% of total 15rem
+    transform: translateX(-3rem) scale(1.4); // for centring the image content and for zoom out effect
+    transition: all 0.25s ease-in;
+  }
+
+  &__text {
+    transform: skewX(12deg);
+
+    @include respond(phone) {
+      transform: skewX(0);
+    }
+  }
+
+  &__caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 20%);
+    color: $color-white;
+    text-transform: uppercase;
+    font-size: 1.7rem;
+    text-align: center;
+    opacity: 0;
+    transition: all 0.25s ease-in;
+    backface-visibility: hidden; // for fixing the little movement at the end of transition
+  }
+
+  &:hover &__caption {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+
+  &:hover &__img {
+    transform: translateX(-3rem) scale(1);
+    filter: blur(3px) brightness(80%); // for blur effect, brightness value above 100% makes it brighter and lower will darken
+  }
+}
